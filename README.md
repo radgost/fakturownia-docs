@@ -11,3 +11,9 @@ Przykładowe szablony Faktur:
 HTML: https://github.com/fakturownia/fakturownia/blob/master/snieg.hbs.html
 
 CSS: https://github.com/fakturownia/fakturownia/blob/master/snieg.css
+
+
+API
+---------------
+
+Opis API znajduje się tu: [Fakturownia API](https://github.com/radgost/fakturownia-api)
