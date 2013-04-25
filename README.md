@@ -1,8 +1,10 @@
-Fakturownia
+Fakturownia.pl - faktur online
 ===========
 
 Szablony faktur
 ---------------
+
+Korzystając z naszego systemu do fakturownia, masz dostęp do 3 wzorów faktur. Jeśli któryś z nich nie spełnia twoich oczekiwań możesz przygotować własny szablon. Wystarczy zalogować się do swojego konta (jeśli go jeszcze nie masz kliknij tu) i wejść w ustawienia >>> ustawienia konta >>> szablon faktury. Następnie kliknij "dodaj nowy szablon" i otworzy się okno do edycji kodu, dzięki któremu możesz przygotować indywidualny szablon.
 
 Przykładowe szablony Faktur:
 
