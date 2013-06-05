@@ -9,9 +9,9 @@ przygotować własny szablon. Wystarczy zalogować się do swojego konta (jeśli
 
 Przykładowe szablony Faktur:
 
-HTML: https://github.com/fakturownia/fakturownia/blob/master/snieg.hbs.html
+HTML: https://github.com/radgost/fakturownia/blob/master/snieg.hbs.html
 
-CSS: https://github.com/fakturownia/fakturownia/blob/master/snieg.css
+CSS: https://github.com/radgost/fakturownia/blob/master/snieg.css
 
 Szablony e-maili
 ---------------
