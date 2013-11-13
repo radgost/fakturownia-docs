@@ -5,7 +5,10 @@ Szablony faktur
 ---------------
 
 Korzystając z naszego systemu do fakturownia, masz dostęp do 3 wzorów faktur. Jeśli któryś z nich nie spełnia twoich oczekiwań możesz 
-przygotować własny szablon. Wystarczy zalogować się do swojego konta (jeśli go jeszcze nie masz to [tu możesz założyć darmowe konto](https://app.fakturownia.pl/signup) ) i wejść w ustawienia >>> ustawienia konta >>> szablon faktury. Następnie kliknij "dodaj nowy szablon" i otworzy się okno do edycji kodu, dzięki któremu możesz przygotować indywidualny szablon.
+przygotować własny szablon. Wystarczy zalogować się do swojego konta (jeśli go jeszcze nie masz to
+[tu możesz założyć darmowe konto](https://app.fakturownia.pl/signup) ) i wejść w ustawienia >>> ustawienia konta >>> szablon faktury. Następnie kliknij "dodaj nowy szablon" i otworzy się okno do edycji kodu, dzięki któremu możesz przygotować indywidualny szablon.
+
+
 
 Przykładowe szablony Faktur:
 
@@ -13,8 +16,11 @@ HTML: https://github.com/radgost/fakturownia/blob/master/snieg.hbs.html
 
 CSS: https://github.com/radgost/fakturownia/blob/master/snieg.css
 
+Szablony są tworzone przy wykorzystaniu znaczników  [Handlebars](http://handlebarsjs.com/)
+
 Zmienne których można używać w szablonach:
 
+```shell
 {{document_type}}
 {{kind}} - typ
 {{number}} - numer
@@ -105,6 +111,8 @@ Zmienne których można używać w szablonach:
 {{/each}}
 
 {{footer}}
+```
+
 
 
 
