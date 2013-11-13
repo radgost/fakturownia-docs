@@ -118,16 +118,47 @@ Zmienne których można używać w szablonach:
 
 Szablony e-maili
 ---------------
-`TODO`
+Można tworzyć szablony e-maili które będą wysyłane do klientów. Są 2 szablony dla standardowego wysyłania faktury oraz
+do wysyłania przypomnień o niezapłaconych fakturyach. Tworząc szablony używa się tych samych zmiennych co przy szablonach faktrur i korzysta się także z Handlebar.
+
+Domyślne szablon wysyłania faktur:
+```shell
+Dzień dobry,
+
+dziękujemy za skorzystanie z naszych usług. 
+Załączam dokument {{document_type}} {{number}} na kwotę {{total_price_gross}} brutto.
+
+Link do podglądu {{view_url}}
+
+
+{{footer}}
+```
+
+Domyślne szablon przypomnienia o niezapłaconej fakturze:
+```shell
+Dzień dobry,
+
+przypominamy o zaległej płatności za {{document_type}} {{number}} na kwotę {{total_price_gross}} brutto.
+
+Link do podglądu: {{view_url}}
+
+{{footer}}
+```
+
 
 Import danych
 ---------------
-`TODO`
+
+Możliwy jest import danych z dowolnych programów które zapiszą dane do plików  .TXT, .CSV, .XLS, .ODS, .XLSX, .TSV, .XML
+Podczas importu samodzienie można ustawiać jakie kolumny i wiersze są importowane.
+
+Można importować Faktury, Klientów, Produkty
+
+Dodatkowo dostępne są opcje importu: Sprzedaż na ALLEGRO.PL (XML), Zakupy w ACTION S.A. (CSV), Zakupy w ABC DATA S.A. (XML), Faktury, klienci i produkty z CDN optima 
 
 
 API
 ---------------
 
 Opis API znajduje się tu: [Fakturownia API](https://github.com/radgost/fakturownia-api)
-
 
