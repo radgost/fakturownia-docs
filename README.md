@@ -119,7 +119,8 @@ Zmienne których można używać w szablonach:
 Szablony e-maili
 ---------------
 Można tworzyć szablony e-maili które będą wysyłane do klientów. Są 2 szablony dla standardowego wysyłania faktury oraz
-do wysyłania przypomnień o niezapłaconych fakturyach. Tworząc szablony używa się tych samych zmiennych co przy szablonach faktrur i korzysta się także z Handlebar.
+do wysyłania przypomnień o niezapłaconych fakturyach. Tworząc szablony używa się tych samych zmiennych co przy szablonach 
+faktrur i korzysta się także z [Handlebars](http://handlebarsjs.com/).
 
 Domyślne szablon wysyłania faktur:
 ```shell
