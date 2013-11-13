@@ -4,9 +4,9 @@
 Szablony faktur
 ---------------
 
-Korzystając z naszego systemu do fakturownia, masz dostęp do 3 wzorów faktur. Jeśli któryś z nich nie spełnia twoich oczekiwań możesz 
+Korzystając z naszego systemu do fakturownia, masz dostęp do kilku wzorów faktur. Jeśli któryś z nich nie spełnia twoich oczekiwań możesz 
 przygotować własny szablon. Wystarczy zalogować się do swojego konta (jeśli go jeszcze nie masz to
-[tu możesz założyć darmowe konto](https://app.fakturownia.pl/signup) ) i wejść w ustawienia >>> ustawienia konta >>> szablon faktury. Następnie kliknij "dodaj nowy szablon" i otworzy się okno do edycji kodu, dzięki któremu możesz przygotować indywidualny szablon.
+[tu możesz założyć darmowe konto](https://app.fakturownia.pl/signup) ) i wejść w Ustawienia > Ustawienia konta > Szablony. Następnie kliknij "dodaj nowy szablon" i otworzy się okno do edycji kodu, dzięki któremu możesz przygotować indywidualny szablon.
 
 
 
