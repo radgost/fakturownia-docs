@@ -146,6 +146,30 @@ Link do podglądu: {{view_url}}
 {{footer}}
 ```
 
+Funkcje dostępne w szablonach
+
+w szablonach dostepne są następujące funkcje:
+
+```shell
+  if
+  eq
+  not_eq
+  lt 
+  in 
+  not_in
+  tt
+```
+
+Przykład wywołania funkcji eq:
+
+```shell  
+{{#eq department_id "123"}}
+  info dla danego departamento
+{{else}}
+  info dla innych departamentow
+{{/eq}}
+```
+
 
 Import danych
 ---------------
