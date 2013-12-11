@@ -146,7 +146,9 @@ Link do podglądu: {{view_url}}
 {{footer}}
 ```
 
+
 Funkcje dostępne w szablonach
+---------------
 
 w szablonach dostepne są następujące funkcje:
 
