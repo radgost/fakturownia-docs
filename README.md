@@ -86,7 +86,7 @@ Zmienne których można używać w szablonach:
 {{total_price_net_in_main_currency}}
 {{total_price_gross_in_main_currency}}
 {{additional_info}}
-{{department}} - dział / oddział firmy
+{{department}} - dział / oddział firmy - dostępne są pola id, name, kind ... np {{department.id}} {{department.name}}
 
 {{#each positions}} : 
   {{no}}
