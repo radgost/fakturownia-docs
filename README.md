@@ -162,7 +162,7 @@ w szablonach dostepne są następujące funkcje:
   not_in
   tt
   include_in_col
-  for - przykład {{#for size_from size_to}} no:{{no}} {{/for}}
+  for
 ```
 
 Przykład wywołania funkcji eq:
@@ -172,6 +172,16 @@ Przykład wywołania funkcji eq:
   ok
 {{else}}
   not ok
+}}
+
+{{#lt val1 17 }}
+  <17
+}}
+
+{{#mt val1 17 }}
+  >17
+{{else}}
+ <17
 }}
 
 {{#eq department_id "123"}}
