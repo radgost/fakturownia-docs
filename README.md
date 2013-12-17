@@ -147,29 +147,43 @@ Link do podglądu: {{view_url}}
 ```
 
 
-Funkcje dostępne w szablonach
+Funkcje dostępne w szablonach faktur i e-maili
 ---------------
 
 w szablonach dostepne są następujące funkcje:
 
 ```shell
   if
-  eq
+  eq 
   not_eq
-  lt 
+  lt
+  gt
   in 
   not_in
   tt
+  include_in_col
+  for - przykład {{#for size_from size_to}} no:{{no}} {{/for}}
 ```
 
 Przykład wywołania funkcji eq:
 
 ```shell  
+{{#if val1 }}
+  ok
+{{else}}
+  not ok
+}}
+
 {{#eq department_id "123"}}
   info dla danego departamento
 {{else}}
   info dla innych departamentow
 {{/eq}}
+
+
+{{#for size_from size_to}}
+    no: {{no}}
+{{/for}}
 ```
 
 
