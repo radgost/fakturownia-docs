@@ -165,7 +165,7 @@ w szablonach dostepne są następujące funkcje:
   for
 ```
 
-Przykład wywołania funkcji eq:
+Przykład wywołania funkcji:
 
 ```shell  
 {{#if val1 }}
