@@ -154,15 +154,16 @@ w szablonach dostepne są następujące funkcje:
 
 ```shell
   if
+  for
   eq 
   not_eq
   lt
   gt
+  tt
+  include
+  include_in_col
   in 
   not_in
-  tt
-  include_in_col
-  for
 ```
 
 Przykład wywołania funkcji:
