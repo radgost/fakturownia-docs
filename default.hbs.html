@@ -12,15 +12,11 @@
 
 	<table  class="clean to_half">
 
-
-
 		<tr>
 			<td >
 				
 				<p>
-
-					<strong class="big_text">{{document_type}}</strong> {{tt "invoice.number"}} {{number}}
-				
+					<strong class="big_text">{{document_type}}</strong> {{tt "invoice.number"}} {{number}}				
 				</p>
 				
 				<p> </p>
@@ -29,7 +25,7 @@
 					<strong class="medium_text">{{print_option}}</strong>
 					<br/>
 					{{#if issue_place}}
-						<strong>{{tt "invoice.place"}}:</strong> {{issue_place}}, le {{issue_date}} <br/>	
+						<strong>{{tt "invoice.place"}}:</strong> {{issue_place}}, {{issue_date}} <br/>	
 					{{else}}
 						<strong>{{tt "invoice.issue_date"}}:</strong> {{issue_date}} <br/>	
 					{{/if}}
@@ -40,6 +36,19 @@
 							<strong>{{tt "invoice.sell_date"}}:</strong> {{sell_date}}
 						{{/if}}
 					{{/if}}
+					{{#if type_of_payment}}
+							<br/>	
+							<strong>{{tt "invoice.payment_type"}}:</strong>
+							{{type_of_payment}}
+						
+					{{/if}}
+
+					{{#if payment_to}}
+							<br/>	
+							<strong>{{tt "invoice.payment_date"}}:</strong>
+							{{payment_to}}
+						
+					{{/if}}
 				</p>				
 
 			</td>
@@ -47,11 +56,7 @@
 			<td class="logo_inside">
 
 				{{#if logo_url}}
-		
-					
 						<img src="{{logo_url}}" alt="logo"/>
-					
-		
 				{{/if}}
 				
 
@@ -80,42 +85,33 @@
 			
 			<tr>
 			
-				<td>
-
-				
+				<td>				
 					<p>{{company}}</p>
 					<p>{{{address}}}</p>
-					<p>Company Registration No. {{{tax_no}}}</p>
+					<p>{{seller_tax_no_kind}} {{tax_no}}</p>
 				
-				
-
 					{{#if bank}}<p>{{bank}} {{bank_account}}</p>{{/if}}
 					{{#if email}}<p>{{email}}</p>{{/if}}
 				
 					{{#if www}}<p>{{www}}</p>{{/if}}
 				
-					
-					{{#if phone}}<p>Phone: {{phone}}</p>{{/if}}
-					{{#if fax}}<p>Fax: {{fax}}</p>{{/if}}
+					{{#if phone}}<p>{{tt 'department.phone'}}: {{phone}}</p>{{/if}}
+					{{#if fax}}<p>{{tt 'department.fax'}}: {{fax}}</p>{{/if}}
 
 				</td>
 
 				<td>
-
-
-				
-
 					<p>{{buyer}}</p>
 					<p>{{{buyer_address}}}</p>
 					{{#if buyer_company}}
 						{{#if buyer_tax_no}}
-							<p>{{tax_name}} {{buyer_tax_no}}</p>
+							<p>{{buyer_tax_no_kind}} {{buyer_tax_no}}</p>
 						{{/if}}
 					{{/if}}
 					
 					{{#if use_delivery_address}}
 						{{#if delivery_address}}
-						<p><strong>{{tt "client.delivery_address"}}:</strong><br/>
+							<p><strong>{{tt "client.delivery_address"}}:</strong><br/>
 							{{{delivery_address}}}</p>
 						{{/if}}
 					{{/if}}
@@ -161,61 +157,55 @@
 				 {{tt "invoice_position.name"}}
 				</th>
 
-				{{#not_eq kind 'advance'}}
-					{{#if use_product_code}}
-						<th class="width2">
-							{{tt "invoice_position.code"}}
-						</th>				
-					{{/if}}
-
-					{{#if additional_info}}				
+				{{#if use_product_code}}
 					<th class="width2">
-						{{additional_info_desc}}
+						{{tt "invoice_position.code"}}
 					</th>				
-					{{/if}}
-					{{#if discount}}				
-					<th class="width1">
-						{{tt "invoice_position.discount_percent"}}
-					</th>				
-					{{/if}}
+				{{/if}}
 
-					<th class="width1">
-						{{tt "invoice_position.quantity"}}
+				{{#if additional_info}}				
+				<th class="width2">
+					{{additional_info_desc}}
+				</th>				
+				{{/if}}
+				{{#if discount}}				
+				<th class="width1">
+					{{tt "invoice_position.discount_percent"}}
+				</th>				
+				{{/if}}
+
+				<th class="width1">
+					{{tt "invoice_position.quantity"}}
+				</th>
+				{{#if tax_visible}}
+					<th class="width3 text_right ">
+						{{tt "invoice_position.price_net"}}
 					</th>
-					{{#if tax_visible}}
-						<th class="width3 text_right ">
-							{{tt "invoice_position.price_net"}}
-						</th>
-						<th class="width3 text_right ">
-							{{tt "invoice_position.total_price_net"}}
-						</th>
-						<th class="width1 text_center ">
-							{{tax_name}}
-						</th>
-						{{#if tax2_visible}}
-							<th class="width1 text_center ">
-								{{tax2_name}}
-							</th>
-						{{/if}}
-						<th class="width3 text_right ">					
-							{{tax_value_name}}					
-						</th>
-						<th class="width3 text_right ">
-							 {{tt "invoice_position.total_price_gross"}}
-						</th>
-					{{else}}
-						<th class="width3 text_right ">
-							{{tt "invoice_position.bill_price_net"}}
-						</th>
-						<th class="width3 text_right ">
-							 {{tt "invoice_position.bill_total_price_gross"}}
-						</th>
-					{{/if}}
-				{{else}}
 					<th class="width3 text_right ">
 						{{tt "invoice_position.total_price_net"}}
 					</th>
-				{{/not_eq}}
+					<th class="width1 text_center ">
+						{{tax_name}}
+					</th>
+					{{#if tax2_visible}}
+						<th class="width1 text_center ">
+							{{tax2_name}}
+						</th>
+					{{/if}}
+					<th class="width3 text_right ">					
+						{{tax_value_name}}					
+					</th>
+					<th class="width3 text_right ">
+						 {{tt "invoice_position.total_price_gross"}}
+					</th>
+				{{else}}
+					<th class="width3 text_right ">
+						{{tt "invoice_position.bill_price_net"}}
+					</th>
+					<th class="width3 text_right ">
+						 {{tt "invoice_position.bill_total_price_gross"}}
+					</th>
+				{{/if}}
 			</tr>
 		</thead>
 		<tbody>
@@ -227,59 +217,55 @@
 				<td>
 					{{item}}
 				</td>
-				{{#not_eq ../kind 'advance'}}
-					{{#if ../../use_product_code}}
-						<td>
-						{{code}}
-						</td>					
-					{{/if}}
-					
-					{{#if ../../additional_info}}				
+				
+				{{#if ../use_product_code}}
 					<td>
-						{{additional_info}}
-					</td>				
-					{{/if}}
-					
-					{{#if ../../discount}}
-					<td class="text_center">
-						{{discount}}
-					</td>
-					{{/if}}				
+					{{code}}
+					</td>					
+				{{/if}}
+				
+				{{#if ../additional_info}}				
+				<td>
+					{{additional_info}}
+				</td>				
+				{{/if}}
+				
+				{{#if ../discount}}
+				<td class="text_center">
+					{{discount}}
+				</td>
+				{{/if}}				
 
-					<td class="text_center">
-						{{quantity}}
-					</td>
-					<td class="text_right number">
-						{{unit_price_net}}
-					</td>
+				<td class="text_center">
+					{{quantity}}
+				</td>
+				<td class="text_right number">
+					{{unit_price_net}}
+				</td>
 
-					{{#if ../../tax_visible}}
+				{{#if ../tax_visible}}
 
-						<td class="text_right number">
-							{{total_price_net}}
-						</td>			
-
-						<td class="text_right number">
-							{{tax}}%
-						</td>
-						{{#if ../../../tax2_visible}}
-							<td class="text_right number">
-								{{tax2}}%
-							</td>
-						{{/if}}
-						<td class="text_right number">
-							{{tax_value}}
-						</td>
-					{{/if}}				
-		
-					<td class="text_right number">
-						{{total_price_gross}}
-					</td>
-				{{else}}
 					<td class="text_right number">
 						{{total_price_net}}
+					</td>			
+
+					<td class="text_right number">
+						{{tax}}%
 					</td>
-				{{/not_eq}}
+					{{#if ../../tax2_visible}}
+						<td class="text_right number">
+							{{tax2}}%
+						</td>
+					{{/if}}
+					<td class="text_right number">
+						{{tax_value}}
+					</td>
+				{{/if}}				
+	
+				<td class="text_right number">
+					{{total_price_gross}}
+				</td>
+				
 			</tr>
 
 			{{/each}}
@@ -289,53 +275,47 @@
 			
 				<tr class="clean no_border">
 								
-					{{#not_eq kind 'advance'}}		
+					<td class=""></td>
+					<td class=""></td> 
+					{{#if use_product_code}}
+					<td class=""></td>
+					{{/if}}
+					{{#if additional_info}}				
+					<td class=""></td>
+					{{/if}}
+					{{#if discount}}
+					<td class=""></td>
+					{{/if}}
+					{{#if tax_visible}}
 						<td class=""></td>
-						<td class=""></td> 
-						{{#if use_product_code}}
-						<td class=""></td>
-						{{/if}}
-						{{#if additional_info}}				
-						<td class=""></td>
-						{{/if}}
-						{{#if discount}}
-						<td class=""></td>
-						{{/if}}
-						{{#if tax_visible}}
-							<td class=""></td>
-						{{/if}}		
-					{{/not_eq}}
+					{{/if}}		
 					<td  class="text_right no_border">
 						<strong>{{tt "invoice.total"}}</strong>
 					</td>
-					{{#not_eq kind 'advance'}}
+					<td class="text_right number">
+						{{#not_eq kind 'final'}}
+							{{total_price_net}}
+						{{/not_eq}}
+						{{#eq kind 'final'}}
+							{{positions_total_price_net}}
+						{{/eq}}
+					</td>
+					{{#if tax_visible}}
+						<td class=""></td>
+						{{#if ../tax2_visible}}
+							<td class=""></td>
+						{{/if}}
+
 						<td class="text_right number">
 							{{#not_eq kind 'final'}}
-								{{total_price_net}}
+								{{tax_value}}
 							{{/not_eq}}
 							{{#eq kind 'final'}}
-								{{positions_total_price_net}}
+								{{positons_total_tax}}
 							{{/eq}}
+							
 						</td>
-						{{#if tax_visible}}
-							<td class=""></td>
-							{{#if ../tax2_visible}}
-								<td class=""></td>
-							{{/if}}
-
-							<td class="text_right number">
-								{{#not_eq kind 'final'}}
-									{{tax_value}}
-								{{/not_eq}}
-								{{#eq kind 'final'}}
-									{{positons_total_tax}}
-								{{/eq}}
-								
-							</td>
-						{{/if}}
-					{{else}}
-						<td class=""></td>
-					{{/not_eq}}
+					{{/if}}
 					<td class="width3 text_right number">
 						{{#not_eq kind 'final'}}
 							{{total_price_gross}}
@@ -351,49 +331,41 @@
 				{{#if tax_visible}}
 				{{#each summary}}
 				<tr class="no_border">
-					{{#not_eq ../kind 'advance'}}	
-						<td class=""></td>
-						<td class=""></td>
-						{{#if ../../use_product_code}}
-						<td class=""></td>
-						{{/if}}
-						{{#if ../../discount}}
-						<td class=""></td>
-						{{/if}}
-						{{#if ../../additional_info}}				
-						<td class=""></td>
-						{{/if}}
+					<td class=""></td>
+					<td class=""></td>
+					{{#if ../../use_product_code}}
+					<td class=""></td>
+					{{/if}}
+					{{#if ../../discount}}
+					<td class=""></td>
+					{{/if}}
+					{{#if ../../additional_info}}				
+					<td class=""></td>
+					{{/if}}
 
-						{{#if ../../tax_visible}}
-							<td class=""></td>
-						{{/if}}
-					{{/not_eq}}
+					{{#if ../../tax_visible}}
+						<td class=""></td>
+					{{/if}}
 
 					<td class="text_right number">
 						
-						{{#eq ../kind 'advance'}}
-							{{tax}}%
-						{{else}}
-							<strong>{{tt "invoice.including"}}</strong>
-						{{/eq}}
+						{{tax}}%
 					</td>
 
-					{{#not_eq ../kind 'advance'}}
-						<td class="text_right number">
-							{{total_price_net}}
-						</td>
+					<td class="text_right number">
+						{{total_price_net}}
+					</td>
 
-						{{#if ../../tax_visible}}
+					{{#if ../../tax_visible}}
+					<td class="text_right number">
+						{{tax}}%
+					</td>
+						{{#if ../../../tax2_visible}}
 						<td class="text_right number">
-							{{tax}}%
+							{{tax2}}%
 						</td>
-							{{#if ../../../tax2_visible}}
-							<td class="text_right number">
-								{{tax2}}%
-							</td>
-							{{/if}}
 						{{/if}}
-					{{/not_eq}}
+					{{/if}}
 					
 
 					<td class="text_right number">
@@ -509,34 +481,7 @@
 							<td>{{paid}}</td>
 						</tr>					
 
-						
-
 					{{/if}}
-
-					
-					
-					{{#if type_of_payment}}
-					
-						<tr class="inv_to_pay">
-				
-							<th width="10">{{tt "invoice.payment_type"}}:</th>
-							<td>{{type_of_payment}} </td>
-						</tr>					
-						
-					{{/if}}
-
-					{{#if payment_to}}
-					
-
-						<tr class="inv_to_pay">
-				
-							<th width="10">{{tt "invoice.payment_date"}}:</th>
-							<td>{{payment_to}}</td>
-						</tr>					
-					
-						
-					{{/if}}
-				
 
 			
 		</tbody>
@@ -548,16 +493,13 @@
 		<tr>
 			<td class="text_center half_width" style="width:50%">
 				{{#if person}}
-				<strong style="display:block;margin-bottom: 5px;">{{tt "invoice.seller_person"}}</strong>
-				
-				{{person}}
+					<strong style="display:block;margin-bottom: 5px;">{{tt "invoice.seller_person"}}</strong>				
+					{{person}}
 
 				{{/if}}
 			</td>
 
 			<td  class="text_center half_width"  style="width:50%">
-				
-				
 				
 				{{#if buyer_person}}
 					{{tt "invoice.buyer_person"}}
@@ -565,7 +507,6 @@
 					.................................
 				{{/if}}
 
-			
 				
 			</td>
 		</tr>
@@ -619,8 +560,6 @@
 {{#if stamp_url}}
 </div> <!-- custom_stamp -->
 {{/if}}
-
-
 
 
 </div> <!-- invoice_outline -->
