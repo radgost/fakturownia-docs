@@ -67,13 +67,25 @@
 	th.width4,
 	td.width4{width:30%;min-width:100px;}
 
-	table td,table th{border-bottom:1px solid #DDDDDD;padding:10px 5px !important;background:transparent;}
+	table td,table th {
+		border-bottom: 1px solid #DDDDDD;
+		padding: 10px 5px;
+		background: transparent;
+	}
 
 	tr{page-break-inside:avoid;}
 	table{page-break-after:auto}
 	tr{page-break-inside:avoid;page-break-after:auto}
 	td{page-break-inside:avoid;page-break-after:auto}
 	thead{display:table-header-group}
+	
+	td.text_center {
+		text-align:center;
+	}
+	
+	table.full_width td{
+		border:0;
+	}
 
 
 
@@ -85,7 +97,7 @@
 	table caption{background-color:#F8F3E6;padding:10px;caption-side:top;margin-bottom:5px;}
 	table.clean,
 	.clean th,
-	.clean td{border:0;background-color:transparent;text-align:left;    padding: 0 !important;}
+	.clean td{border:0;background-color:transparent;text-align:left;   }
 	table.to_right{float:right;width:99%;}
 	table.to_right th{text-align:right;/*width:79%;*/}
 	table.to_right td{padding-right:9px;text-align:right;width:13%;}
@@ -137,6 +149,11 @@
 
 	table.main_inv_table th{
 		font-size:80%;
+		text-align:right;
+	}
+	
+	table.main_inv_table td{
+		text-align:right;
 	}
 	
 	hr {
@@ -148,11 +165,21 @@
 
 	}
 	
-	.invoice_title strong{
+	.clean.to_half td p:first-child {
+	    color: #999;
+	    display: block;
+	    font-size: 2em;
+	    font-weight: normal;
+	    text-align: center;
+	    text-transform: none;
+	}
+	
+	
+	strong.big_text{
 		text-transform:none;
 		font-weight:normal;
 	    color: #000000;
-	    font-size: 3.5em;
+	    font-size: 2.5em;
 	    line-height: 1em;
 	    margin: 42px 0 10px;
 	    padding: 0;
@@ -181,6 +208,10 @@
 
 	table td.empty{border:0;}
 	html body table tr:hover{background-color:transparent;}
+
+
+	.main_inv_table > thead > tr > th:nth-child(2),
+	.main_inv_table > tbody > tr > td:nth-child(2),
 	table.main_inv_table 	th.text_left,
 	table.main_inv_table td.text_left,
 	th.text_left,
@@ -190,7 +221,18 @@
 	
 	th.width3 + th.width1.nowrap {white-space:normal}
 	
-
+	.main_inv_table tr.clean.no_border th,
+	.main_inv_table tr.clean.no_border td {
+		padding:2px 5px 2px 5px;
+	}
+	
+	
+	table.clean.to_right tr th,
+	table.clean.to_right tr td {
+		padding:2px 5px 2px 5px;
+	}
+	
+	
 	
 	.payment_button {
 		display:block;
