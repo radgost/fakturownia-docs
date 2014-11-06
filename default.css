@@ -53,8 +53,17 @@
 		
 	}
 	
+	td:empty {
+	    visibility: hidden;
+	}
+	
+	table {
+	    border-collapse: collapse;
+	       empty-cells:hide;
+	}
+	
 	html tr,
-	html td{background-color:transparent;}
+	html td{background-color:transparent;empty-cells:hide}
 	table{margin:auto;clear:both;margin-top:10px;border-collapse:collapse ;empty-cells:hide;margin:5px auto 5px auto;width:99%;}
 	table tr{vertical-align:top;}
 
