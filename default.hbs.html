@@ -16,7 +16,7 @@
 			<td >
 				
 				<p>
-					<strong class="big_text">{{document_type}}</strong> {{tt "invoice.number"}} {{number}}				
+					<strong class="big_text">{{document_type}}</strong> <span>{{tt "invoice.number"}} {{number}}</span>
 				</p>
 				
 				<p> </p>
@@ -27,13 +27,21 @@
 					{{#if issue_place}}
 						<strong>{{tt "invoice.place"}}:</strong> {{issue_place}}, {{issue_date}} <br/>	
 					{{else}}
-						<strong>{{tt "invoice.issue_date"}}:</strong> {{issue_date}} <br/>	
-					{{/if}}
-					{{#if sell_date}}
-						{{#if sell_date_kind}}
-							<strong>{{{sell_date_kind}}}:</strong> {{sell_date}}
+						<strong>
+						{{#if accounting_doc}}
+							{{tt "invoice.issue_date"}}:
 						{{else}}
-							<strong>{{tt "invoice.sell_date"}}:</strong> {{sell_date}}
+							{{tt "invoice.print_date"}}:
+						{{/if}}
+						</strong> {{issue_date}} <br/>	
+					{{/if}}
+					{{#if accounting_doc}}
+						{{#if sell_date}}
+							{{#if sell_date_kind}}
+								<strong>{{{sell_date_kind}}}:</strong> {{sell_date}}
+							{{else}}
+								<strong>{{tt "invoice.sell_date"}}:</strong> {{sell_date}}
+							{{/if}}
 						{{/if}}
 					{{/if}}
 					{{#if type_of_payment}}
@@ -181,15 +189,28 @@
 					<th class="width3 text_right ">
 						{{tt "invoice_position.price_net"}}
 					</th>
+					
+					{{#if discount}}
+					<th class="width3 text_right ">
+						{{tt "invoice_position.price_net_with_discount"}}
+					</th>
+					{{/if}}
+
+					{{#if show_unit_price_gross}}
+					<th class="width3 text_right ">
+						{{tt "invoice_position.price_gross"}}
+					</th>
+					{{/if}}
+
 					<th class="width3 text_right ">
 						{{tt "invoice_position.total_price_net"}}
 					</th>
 					<th class="width1 text_center ">
-						{{tax_name}}
+						{{tax_name}} %
 					</th>
 					{{#if tax2_visible}}
 						<th class="width1 text_center ">
-							{{tax2_name}}
+							{{tax2_name}} %
 						</th>
 					{{/if}}
 					<th class="width3 text_right ">					
@@ -202,6 +223,11 @@
 					<th class="width3 text_right ">
 						{{tt "invoice_position.bill_price_net"}}
 					</th>
+					{{#if discount}}
+					<th class="width3 text_right ">
+						{{tt "invoice_position.price_net_with_discount"}}
+					</th>
+					{{/if}}
 					<th class="width3 text_right ">
 						 {{tt "invoice_position.bill_total_price_gross"}}
 					</th>
@@ -242,19 +268,30 @@
 				<td class="text_right number">
 					{{unit_price_net}}
 				</td>
+				{{#if ../discount}}
+				    <td class="row1">
+				        {{ unit_price_net_with_discount }}
+				    </td>			
+				{{/if}}
 
 				{{#if ../tax_visible}}
+
+					{{#if ../../show_unit_price_gross}}
+					<td class="text_right number">
+						{{unit_price_gross}}
+					</td>
+					{{/if}}
 
 					<td class="text_right number">
 						{{total_price_net}}
 					</td>			
 
 					<td class="text_right number">
-						{{tax}}%
+						{{tax}}
 					</td>
 					{{#if ../../tax2_visible}}
 						<td class="text_right number">
-							{{tax2}}%
+							{{tax2}}
 						</td>
 					{{/if}}
 					<td class="text_right number">
@@ -275,19 +312,24 @@
 			
 				<tr class="clean no_border">
 								
-					<td class=""></td>
-					<td class=""></td> 
+					<td class="empty"></td>
+					<td class="empty"></td> 
 					{{#if use_product_code}}
-					<td class=""></td>
+					<td class="empty"></td>
 					{{/if}}
 					{{#if additional_info}}				
-					<td class=""></td>
+					<td class="empty"></td>
 					{{/if}}
 					{{#if discount}}
-					<td class=""></td>
+					<td class="empty"></td>
+					<td class="empty"></td>
 					{{/if}}
 					{{#if tax_visible}}
-						<td class=""></td>
+						<td class="empty"></td>
+						{{#if ../show_unit_price_gross}}
+						<td class="empty"></td>
+						{{/if}}
+
 					{{/if}}		
 					<td  class="text_right no_border">
 						<strong>{{tt "invoice.total"}}</strong>
@@ -301,9 +343,9 @@
 						{{/eq}}
 					</td>
 					{{#if tax_visible}}
-						<td class=""></td>
+						<td class="empty"></td>
 						{{#if ../tax2_visible}}
-							<td class=""></td>
+							<td class="empty"></td>
 						{{/if}}
 
 						<td class="text_right number">
@@ -331,25 +373,30 @@
 				{{#if tax_visible}}
 				{{#each summary}}
 				<tr class="no_border">
-					<td class=""></td>
-					<td class=""></td>
+					<td class="empty"></td>
+					<td class="empty"></td>
 					{{#if ../../use_product_code}}
-					<td class=""></td>
+					<td class="empty"></td>
 					{{/if}}
 					{{#if ../../discount}}
-					<td class=""></td>
+					<td class="empty"></td>
+					<td class="empty"></td>
 					{{/if}}
 					{{#if ../../additional_info}}				
-					<td class=""></td>
+					<td class="empty"></td>
 					{{/if}}
 
 					{{#if ../../tax_visible}}
-						<td class=""></td>
+						<td class="empty"></td>
+						{{#if ../../../show_unit_price_gross}}
+							<td class="empty"></td>
+						{{/if}}
 					{{/if}}
+
 
 					<td class="text_right number">
 						
-						{{tax}}%
+						{{!-- {{tax}} --}}
 					</td>
 
 					<td class="text_right number">
@@ -358,11 +405,11 @@
 
 					{{#if ../../tax_visible}}
 					<td class="text_right number">
-						{{tax}}%
+						{{tax}}
 					</td>
 						{{#if ../../../tax2_visible}}
 						<td class="text_right number">
-							{{tax2}}%
+							{{tax2}}
 						</td>
 						{{/if}}
 					{{/if}}
@@ -381,6 +428,32 @@
 		</tbody>
 	</table>
 
+	{{#if total_discount}}
+	 	
+		
+		
+	<table class="clean discount_sum">
+		<tbody>
+			<tr>	
+				
+		
+			<td class="number">
+				<br />
+				<strong>{{tt 'invoice.discount_sum'}}:</strong>
+			
+			    {{total_discount}} {{currency}}
+			</td>
+				
+				
+			
+			</tr>
+		</tbody>
+	</table>		
+		
+	{{/if}}
+	
+	
+	
 
 	<div class="clear"></div>  
 
