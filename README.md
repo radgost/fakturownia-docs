@@ -12,9 +12,9 @@ przygotować własny szablon. Wystarczy zalogować się do swojego konta (jeśli
 
 Przykładowe szablony Faktur:
 
-HTML: https://github.com/fakturownia/api/blob/master/default.hbs.html
+HTML: https://github.com/fakturownia/szablony/blob/master/default.hbs.html
 
-CSS: https://github.com/fakturownia/api/blob/master/default.css
+CSS: https://github.com/fakturownia/szablony/blob/master/default.css
 
 Szablony są tworzone przy wykorzystaniu znaczników  [Handlebars](http://handlebarsjs.com/)
 
