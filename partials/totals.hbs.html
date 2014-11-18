@@ -1,0 +1,87 @@
+	{{#if total_discount}}
+	 	
+		
+		
+	<table class="clean discount_sum">
+		<tbody>
+			<tr>	
+				
+		
+			<td class="number">
+				<br />
+				<strong>{{tt 'invoice.discount_sum'}}:</strong>
+			
+			    {{total_discount}} {{currency}}
+			</td>
+				
+				
+			
+			</tr>
+		</tbody>
+	</table>		
+		
+	{{/if}}
+	
+
+	<div class="clear"></div>  
+
+	
+	<table class="clean to_right">
+		<tr>
+			<th>
+				{{tt "invoice.total_price_net" }}
+			</th>
+			<td class="number">
+			    {{ total_price_net}}{{currency}}
+			</td>
+			{{#if exchange_currency}}
+			<td class="number">			    
+			    {{ total_price_net_in_exchange_currency }}{{exchange_currency}}
+			</td>
+			{{/if}}
+		</tr>
+		{{#if tax_visible}}
+		<tr>
+			<th>
+				{{tax_value_name}}
+			</th>
+			<td class="number">
+			    {{ tax_value }}{{currency}}
+			</td>
+			{{#if exchange_currency}}
+			<td class="number">			    
+			    {{ tax_value_in_exchange_currency }}{{exchange_currency}}
+			</td>
+			{{/if}}
+		</tr>
+		<tr>
+			<th>
+				{{tt "invoice.total_price_gross" }}
+			</th>
+			<td class="number">
+			    {{ total_price_gross}}{{currency}}
+			</td>
+			{{#if exchange_currency}}
+			<td class="number">			    
+			    {{ total_price_gross_in_exchange_currency }}{{exchange_currency}}
+			</td>
+			{{/if}}
+		</tr>
+		{{/if}}
+			
+	</table>
+
+	<div class="clear"></div>
+
+	{{#if exchange_currency}}
+
+	<table class="clean" id="exchange_currency">
+		<tbody>
+			<tr>		
+				<td>
+					{{long_exchange_note}}<br />
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	{{/if}}
