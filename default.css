@@ -70,7 +70,7 @@
 	table, table th, table td{border:0;background-color:transparent;text-align:left;vertical-align:top;}
 
 	table.main_inv_table th,table.main_inv_table td,table.main_inv_table caption{text-align:right;border-collapse:collapse;border:1px solid #d8d7d7 ;}
-	table.main_inv_table th{font-weight:bold;background-color:#f1f1f1 ;border:1px solid #bbbbbb ;font-size:12px;}
+	table.main_inv_table th{font-weight:bold;background-color:#f1f1f1 ;border:1px solid #bbbbbb ;font-size:10px;}
 	table.main_inv_table th p,table td a{text-align:left;}
 	
 	table th {
@@ -180,6 +180,28 @@
 	thead { display:table-header-group }
 	tfoot { display:table-footer-group }
 
+	a.btn-print {
+	  color: #333333 !important;
+	  background-color: #ffffff !important;
+	  border: 2px solid #cccccc !important;
+	  display: inline-block;
+	  padding: 6px 12px !important;
+	  margin-bottom: 0;
+	  font-size: 14px !important;
+	  font-weight: normal;
+	  line-height: 1.428571429 !important;
+	  text-align: center !important;
+	  vertical-align: middle !important;
+	  border-radius: 4px !important;
+	  white-space: nowrap !important;
+	  -webkit-user-select: none;
+	  -moz-user-select: none;
+	  -ms-user-select: none;
+	  -o-user-select: none;
+	  user-select: none;
+	  text-decoration: none;
+	}
+	.pull-right {float: right;}
 
 }
 

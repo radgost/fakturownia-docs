@@ -1,9 +1,17 @@
-<div class="invoice_outline" {{#if status_paid}}{{#not_in kind "proforma,estimate"}}style="background:transparent url('{{paid_mark_url}}') no-repeat 60% 50%"{{/not_in}}{{/if}} >
+<div class="invoice_outline" {{#if status_paid}}{{#if show_paid_logo}}{{#not_in kind "proforma,estimate"}}style="background:transparent url('{{paid_mark_url}}') no-repeat 60% bottom;"{{/not_in}}{{/if}}{{/if}} >
 
 
-{{#if stamp_url}}
-	<div style="background:transparent url('{{stamp_url}}') no-repeat  90% 82%"  id="custom_stamp">
-{{/if}}
+
+
+{{#unless stamp_below_sign_url}}
+
+	{{#if stamp_url}}
+		<div style="background:transparent url('{{stamp_url}}') no-repeat  90% 82%"  id="custom_stamp">
+	{{/if}}
+
+
+
+{{/unless}}
 
 
 	{{#if payment_url}}
@@ -56,6 +64,13 @@
 							<strong>{{tt "invoice.payment_date"}}:</strong>
 							{{payment_to}}
 						
+					{{/if}}
+
+					{{#if additional_field_name}}
+						{{#if additional_field_value}}
+							<br />
+							<strong>{{additional_field_name}}:</strong> {{additional_field_value}}
+						{{/if}}
 					{{/if}}
 				</p>				
 
@@ -155,14 +170,19 @@
 	{{/if}}
 
 
-	<!-- if you want to customize positoins, you can override this by https://github.com/fakturownia/Szablony/blob/master/partials/positions.hbs.html  -->
-	{{>positions}}
-
+	{{#eq kind 'correction'}}
+		<!-- if you want to customize 'positions_correction', you can override this by https://github.com/fakturownia/Szablony/blob/master/partials/positions_correction.hbs.html  -->
+		{{>positions_correction}}
+	{{else}}
+		<!-- if you want to customize 'positions', you can override this by https://github.com/fakturownia/Szablony/blob/master/partials/positions.hbs.html  -->
+		{{>positions}}
+	{{/eq}}
 		
-	<!-- if you want to customize totals, you can override this by https://github.com/fakturownia/Szablony/blob/master/partials/totals.hbs.html  -->
-	{{>totals}}
 
-		  
+	<!-- if you want to customize 'totals', you can override this by https://github.com/fakturownia/Szablony/blob/master/partials/totals.hbs.html  -->
+	{{>totals}}
+	
+
 
 	<table class="clean to_pay">
 		<tbody>
@@ -173,40 +193,25 @@
 			</tr>
 		{{/if}}
 		
+		<tr class="inv_to_pay">	
+			<th width="10">{{tt "invoice.to_pay"}}:</th>
+			<td>{{outstanding}}</td>
+		</tr>
+		
+		{{#if outstanding_in_words}}				
 			<tr class="inv_to_pay">
-				
-				<th width="10">{{tt "invoice.to_pay"}}:</th>
-				<td>{{outstanding}}</td>
+				<th width="10">{{tt "invoice.in_words"}}:</th>
+				<td>{{{outstanding_in_words}}}</td>
+			</tr>					
+		{{/if}}
+	
+		{{#if paid}}	
+			<tr class="inv_to_pay">
+				<th width="10">{{tt "invoice.paid"}}:</th>
+				<td>{{paid}}</td>
 			</tr>
-			
-				
-				
-				
-					
-					
-					{{#if outstanding_in_words}}
-					
-						<tr class="inv_to_pay">
-				
-							<th width="10">{{tt "invoice.in_words"}}:</th>
-							<td>{{{outstanding_in_words}}}</td>
-						</tr>					
-					
-				
-					{{/if}}
-				
-					
-					{{#if paid}}
-					
-						<tr class="inv_to_pay">
-				
-							<th width="10">{{tt "invoice.paid"}}:</th>
-							<td>{{paid}}</td>
-						</tr>					
-
-					{{/if}}
-
-			
+		{{/if}}
+	
 		</tbody>
 	</table>
 
@@ -220,6 +225,20 @@
 					{{person}}
 
 				{{/if}}
+
+
+				{{#if stamp_below_sign_url}}
+
+				<br />
+				<img src="{{stamp_url}}" alt="stamp" style="display:block;margin:auto;max-width:40%"/>
+
+
+				{{else}}
+
+		
+				{{/if}}	
+
+
 			</td>
 
 			<td  class="text_center half_width"  style="width:50%">
@@ -280,13 +299,20 @@
 {{/if}}	
 
 
-{{#if stamp_url}}
-</div> <!-- custom_stamp -->
-{{/if}}
+
+
+{{#unless stamp_below_sign_url}}
+
+	{{#if stamp_url}}
+	</div> <!-- custom_stamp -->
+	{{/if}}
+
+
+{{/unless}}
 
 
 </div> <!-- invoice_outline -->
 
 
 
-	
+

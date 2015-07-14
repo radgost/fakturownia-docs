@@ -1,6 +1,6 @@
-<div class="invoice_outline" {{#if paid}}style="background:transparent url('http://app.fakturownia.pl/pdf/paid_mark_pl_new.jpg') no-repeat 60% 50%"{{/if}} >
+<div class="invoice_outline" {{#if status_paid}}style="background:transparent url('{{paid_mark_url}}') no-repeat 60% 50%"{{/if}} >
 
-  <table   class="full_width">
+	<table   class="full_width">
 
 		{{#if logo_url}}
 		<tr>
@@ -78,7 +78,7 @@
 					{{tt "invoice_position.price_net"}}
 				</th>
 				<th class="width3 text_right">
-					{{tt "invoice_position.price_gross"}}
+					{{tt "invoice_position.total_price_net"}}
 				</th>
 				<th class="width2 text_right">
 					{{tax_name}}
@@ -87,7 +87,7 @@
 					 {{tt "invoice_position.tax_value"}}
 				</th>
 				<th class="width3 text_right">
-					 {{tt "invoice_position.total_price_gross"}}
+					 {{tt "invoice_position.total_price_gross"}}					 
 				</th>
 			</tr>
 		</thead>
@@ -117,6 +117,7 @@
 				</td>
 				<td class="text_right">
 					{{total_price_gross}}
+					<!--  {{../currency}} -->					
 				</td>
 			</tr>
 

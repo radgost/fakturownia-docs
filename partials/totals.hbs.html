@@ -1,32 +1,25 @@
-	{{#if total_discount}}
-	 	
-		
-		
-	<table class="clean discount_sum">
-		<tbody>
-			<tr>	
-				
-		
-			<td class="number">
-				<br />
-				<strong>{{tt 'invoice.discount_sum'}}:</strong>
-			
-			    {{total_discount}} {{currency}}
-			</td>
-				
-				
-			
-			</tr>
-		</tbody>
-	</table>		
-		
-	{{/if}}
-	
+
 
 	<div class="clear"></div>  
 
-	
-	<table class="clean to_right">
+	<table class="totals_inv_table clean to_right">
+
+		{{#if total_discount}}
+		<tr class="total_discount">
+			<th>
+				{{tt 'invoice.discount_sum'}}
+			</th>
+			<td class="number">
+			    {{total_discount}}{{currency}}
+			</td>
+			{{#if exchange_currency}}
+			<td class="number">
+
+			</td>
+			{{/if}}
+		</tr>
+		{{/if}}
+
 		<tr>
 			<th>
 				{{tt "invoice.total_price_net" }}
@@ -84,4 +77,5 @@
 			</tr>
 		</tbody>
 	</table>
+
 	{{/if}}
