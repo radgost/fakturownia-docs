@@ -10,13 +10,17 @@
 	<section id="invoice_header">
 		<div id="info">
 			<p>
-				<span id="document_type">{{document_type}} {{tt "invoice.number"}}</span> <span id="document_number">{{number}}</span>
+				<span id="document_type">{{document_type}} <span id="document_type_spacer"></span>{{tt "invoice.number"}}</span> <span id="document_number">{{number}}</span>
 			</p>
+
 			{{#if correction}}
 				<p style="margin-bottom: 0.5em;">
 					{{ correction }}
 				</p>
 			{{/if}}
+			{{#eq kind 'vat_mp'}}
+				<p><small>{{tt "invoice.cash_accounting"}}</small></p>	
+			{{/eq}}
 			<p>
 				{{#if print_option}}
 					<p>{{print_option}}</p>
@@ -26,11 +30,16 @@
 				{{/if}}
 
 				<p><span>
-				{{#if accounting_doc}}
-					{{tt "invoice.issue_date"}}:
+				{{#not_eq locale 'fr'}}
+					{{#if accounting_doc}}
+						{{tt "invoice.issue_date"}}:
+					{{else}}
+						{{tt "invoice.print_date"}}:
+					{{/if}}
 				{{else}}
-					{{tt "invoice.print_date"}}:
-				{{/if}}</span>
+					{{tt "invoice.issue_date"}}:
+				{{/not_eq}}
+				</span>
 				{{issue_date}}</p>
 
 				{{#if accounting_doc}}
@@ -59,7 +68,7 @@
 				{{#if additional_field_name}}
 					{{#if additional_field_value}}
 						<p>
-						<span>{{additional_field_name}}:</span> {{additional_field_value}}<p>
+						<span>{{additional_field_name}}:</span> {{additional_field_value}}</p>
 					{{/if}}
 				{{/if}}
 			</p>
@@ -73,10 +82,16 @@
 		</div>
 	</section>
 
-
+	<div id="invoice_traders_headers">
+		<div id="seller_header">
+			{{tt "invoice.seller"}}
+		</div>
+		<div id="buyer_header">
+			{{tt "invoice.buyer"}}
+		</div>
+	</div>
 	<section id="invoice_traders">
 		<div id="seller">
-			<p><span>{{tt "invoice.seller"}}</span></p>
 			<p>{{{company}}}</p>
 			<p>{{{address}}}</p>
 			{{#if tax_no}}
@@ -97,14 +112,16 @@
 			{{#if fax}}
 				<p>{{tt 'department.fax'}}: {{fax}}</p>
 			{{/if}}
-			{{#if bank}}
-				<p style="margin-top: 0.5em;">{{bank}}</p>
+			{{#or bank bank_account}}
+				{{#if bank}}<p style="margin-top: 0.5em;">{{bank}}</p>{{/if}}
           		{{#if bank_account}}<p class="nowrap-lines">{{bank_account}}</p>{{/if}}
+			{{/or}}
+			{{#if swift}}
+				<p class="nowrap-lines">{{tt "department.bank_swift"}}:</span> {{swift}}</p>
 			{{/if}}
 		</div>
 
 		<div id="buyer">
-			<p><span>{{tt "invoice.buyer"}}</span></p>
 			<p>{{{buyer}}}</p>
 			<p>{{{buyer_address}}}</p>
 			{{#if buyer_company}}
@@ -148,17 +165,27 @@
 	{{/eq}}
 		
 	{{#if final}}
-		<!-- if you want to customize 'positions', you can override this by https://github.com/fakturownia/Szablony/blob/master/partials/positions.hbs.html  -->
+		<!-- if you want to customize 'advances', you can override this by https://github.com/fakturownia/Szablony/blob/master/partials/advances.hbs.html  -->
 		{{>advances}}
 	{{/if}}
 
-	{{#if tax_visible}}
-		<!-- if you want to customize 'totals', you can override this by https://github.com/fakturownia/Szablony/blob/master/partials/totals.hbs.html  -->
-		{{>totals}}
-	{{/if}}
+	<div class="clean space-top"></div>
+	<!-- if you want to customize 'totals', you can override this by https://github.com/fakturownia/Szablony/blob/master/partials/totals.hbs.html  -->
+	{{>totals}}
 
 
+	<div class="nobreak">
 	<section id="summary">
+
+		{{#not_eq locale 'fr'}}
+			{{#if correction_reason}}
+				<p>
+					<span>{{tt "invoice.correction_reason"}}:</span>
+					{{{correction_reason}}}
+				</p>
+			{{/if}}
+		{{/not_eq}}
+
 
 		{{#if notes}}
 			<p>
@@ -167,17 +194,34 @@
 			</p>
 		{{/if}}
 		
-		<p>
-		<span>{{tt "invoice.to_pay"}}:</span>
-		{{outstanding}}
-		</p>
-
-		{{#if outstanding_in_words}}
+		
+		{{#eq locale 'fr'}}
 			<p>
-			<span>{{tt "invoice.in_words"}}:</span>
-			{{{outstanding_in_words}}}
-			</p>			
-		{{/if}}
+				<span>{{#if negative_outstanding}}{{tt "invoice.to_receive"}}{{else}}{{tt "invoice.to_pay"}}{{/if}}:</span>
+				{{absolute_outstanding}}
+			</p>
+			{{#if absolute_outstanding_in_words}}
+				<p>
+					<span>{{tt "invoice.in_words"}}:</span>
+					{{{absolute_outstanding_in_words}}}
+				</p>			
+			{{/if}}
+		{{else}}
+			<p>
+				<span>{{tt "invoice.to_pay"}}:</span>
+				{{outstanding}}
+			</p>
+			{{#if outstanding_in_words}}
+				<p>
+					<span>{{tt "invoice.in_words"}}:</span>
+					{{{outstanding_in_words}}}
+				</p>			
+			{{/if}}
+		{{/eq}}
+			
+
+			
+
 	
 		{{#or paid show_paid_when_zero}}
 			<p>
@@ -208,6 +252,12 @@
 					<p>{{buyer_person}}</p>
 				{{/if}}
 			{{/not_eq}}
+			{{#in kind "estimate,client_order"}}
+				{{#if show_date_and_sign}}
+					<p style="margin: 0% 10%;"><span>{{tt "invoice.date_and_signature_etc"}}</span></p>
+					<!-- Date et signature du client précédée de la mention ‘Bon pour accord’ --> 
+				{{/if}}
+			{{/in}}
 		</div>
 		<div id="seller_sign">
 			{{#if person}}
@@ -220,10 +270,12 @@
 			{{/if}}
 
 			{{#if stamp_below_sign_url}}
-				<img src="{{stamp_url}}" alt="stamp" style="max-width:40%"/>
+				<img src="{{stamp_url}}" alt="stamp" style="max-width:50%" id="custom_img" />
 			{{/if}}	
 		</div>
 	</section>
+	</div>
+	
 
 {{! ------------------- DO NOT MODIFY ------------------- }}
 	
@@ -303,7 +355,7 @@
 	{{else}}
 		{{#if description_footer}}
 			<section id="description_footer">
-				{{description_footer}}
+				{{{description_footer}}}
 			</section>
 		{{/if}}
 	{{/eq}}
@@ -316,7 +368,7 @@
 		
 			<section id="#last_page">
 
-				<span>{{description_long}}</span>
+				<span>{{{description_long}}}</span>
 
 			</section>
 		

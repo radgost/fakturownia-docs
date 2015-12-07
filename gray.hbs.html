@@ -17,7 +17,7 @@
 		</div>
 		<div id="info">
 			<p>
-				<span id="document_type">{{document_type}} {{tt "invoice.number"}}</span><br />
+				<span id="document_type">{{document_type}} <span id="document_type_spacer"></span>{{tt "invoice.number"}}</span><br />
 				<span id="document_number">{{number}}</span>
 			</p>
 			{{#if correction}}
@@ -29,16 +29,24 @@
 				{{#if print_option}}
 					<p>{{print_option}}</p>
 				{{/if}}
+				{{#eq kind 'vat_mp'}}
+					<p>{{tt "invoice.cash_accounting"}}</p>	
+				{{/eq}}
 				{{#if issue_place}}
 					<p><span>{{tt "invoice.place"}}:</span> {{issue_place}}</p>	
 				{{/if}}
 
 				<p><span>
-				{{#if accounting_doc}}
-					{{tt "invoice.issue_date"}}:
+				{{#not_eq locale 'fr'}}
+					{{#if accounting_doc}}
+						{{tt "invoice.issue_date"}}:
+					{{else}}
+						{{tt "invoice.print_date"}}:
+					{{/if}}
 				{{else}}
-					{{tt "invoice.print_date"}}:
-				{{/if}}</span>
+					{{tt "invoice.issue_date"}}:
+				{{/not_eq}}
+				</span>
 				{{issue_date}}</p>
 
 				{{#if accounting_doc}}
@@ -142,134 +150,72 @@
 	{{/eq}}
 		
 	{{#if final}}
-		<!-- if you want to customize 'positions', you can override this by https://github.com/fakturownia/Szablony/blob/master/partials/positions.hbs.html  -->
+		<!-- if you want to customize 'advances', you can override this by https://github.com/fakturownia/Szablony/blob/master/partials/advances.hbs.html  -->
 		{{>advances}}
 	{{/if}}
 
 
-
+	<div class="clean space-top"></div>
 	<!-- if you want to customize 'totals', you can override this by https://github.com/fakturownia/Szablony/blob/master/partials/totals.hbs.html  -->
 
-	{{#if tax_visible}}
-		{{#eq locale 'fr'}}
-				{{#if show_totals }}
-					{{#unless exchange_currency}}
-					<table class="clean to_right totals_inv_table">
-						{{#unless hide_tax}}
-						<tr>
-							<th>
-								{{tt "invoice.total_price_net" }}
-							</th>
-							<td class="number">
-							    {{ total_price_net }}
-							</td>
-						</tr>
-						{{/unless}}
-						{{#if tax_visible}}
-						{{#unless hide_tax}}
-							{{#each summary}}
-								<tr>
-									<th>
-										{{ ../tax_value_name }} ({{tax}}{{#not_eq tax 'N/A'}}%{{/not_eq}})
-									</th>
-									<td class="number">
-									    {{tax_value}}
-									</td>
-								</tr>
-							{{/each}}
-						{{/unless}}
-						<tr>
-							<th>
-								{{tt "invoice.total_price_gross" }}
-							</th>
-							<td class="number">
-							    {{ total_price_gross }}
-							</td>
-						</tr>
-						{{/if}}
-						
-					</table>
+	
+	{{#eq locale 'fr'}}
+		{{>totals2}}
 
-					<div class="clear"></div>
-					{{/unless}}
-					{{/if}}  
-
-
-
-					{{#if exchange_currency}}
-					<table class="totals_inv_table clean to_right">
-						<tr>
-							<th>
-								{{tt "invoice.total_price_net" }}
-							</th>
-							<td class="number">
-							    {{ total_price_net}}{{currency}}
-							</td>
-							<td class="number">			    
-							    {{ total_price_net_in_exchange_currency }}{{exchange_currency}}
-							</td>
-						</tr>
-						{{#if tax_visible}}
-						<tr>
-							<th>
-								{{tax_value_name}}
-							</th>
-							<td class="number">
-							    {{ tax_value }}{{currency}}
-							</td>
-							<td class="number">			    
-							    {{ tax_value_in_exchange_currency }}{{exchange_currency}}
-							</td>
-						</tr>
-						<tr>
-							<th>
-								{{tt "invoice.total_price_gross" }}
-							</th>
-							<td class="number">
-							    {{ total_price_gross}}{{currency}}
-							</td>
-							<td class="number">			    
-							    {{ total_price_gross_in_exchange_currency }}{{exchange_currency}}
-							</td>
-						</tr>
-						{{/if}}
-							
-					</table>
-
-					<div class="clear"></div>
-
-
-					<table class="clean" id="exchange_currency">
-						<tbody>
-							<tr>		
-								<td>
-									{{long_exchange_note}}<br />
-								</td>
-							</tr>
-						</tbody>
-					</table>
-					{{/if}}
-
-		{{else}}
-			{{>totals}}
-		{{/eq}}
-	{{/if}}
+	{{else}}
+		{{>totals}}
+	{{/eq}}
+	
 
 	<div class="no-page-break">
 	
 	<section id="summary">
 
-		<p>
-			<span>{{tt "invoice.to_pay"}}:</span>
-			<span class="to-pay">{{outstanding}}</span>
-		</p>	
-
-		{{#if outstanding_in_words}}
+		{{#eq locale 'fr'}}
 			<p>
-				<span>{{tt "invoice.in_words"}}:</span>
-				{{{outstanding_in_words}}}
-			</p>			
-		{{/if}}
+				<span>{{#if negative_outstanding}}{{tt "invoice.to_receive"}}{{else}}{{tt "invoice.to_pay"}}{{/if}}:</span>
+				<span class="to-pay">{{absolute_outstanding}}</span>
+				{{#if exchange_currency}}
+				 &nbsp;|&nbsp; {{absolute_outstanding_in_exchange_currency}}
+				{{/if}}
+			</p>
+
+			{{#if absolute_outstanding_in_words}}
+				<p>
+					<span>{{tt "invoice.in_words"}}:</span>
+					{{{absolute_outstanding_in_words}}}
+					{{#if exchange_currency}}
+						&nbsp;|&nbsp; {{{absolute_outstanding_in_words_in_exchange_currency}}}
+					{{/if}}
+				</p>
+			{{/if}}
+		{{else}}
+			<p>
+				<span>{{tt "invoice.to_pay"}}:</span>
+				<span class="to-pay">{{outstanding}}</span>
+				{{#if exchange_currency}}
+				 &nbsp;|&nbsp; {{outstanding_in_exchange_currency}}
+				{{/if}}
+			</p>
+			{{#if outstanding_in_words}}
+				<p>
+					<span>{{tt "invoice.in_words"}}:</span>
+					{{{outstanding_in_words}}}
+					{{#if exchange_currency}}
+						&nbsp;|&nbsp; {{{outstanding_in_words_in_exchange_currency}}}
+					{{/if}}
+				</p>
+			{{/if}}
+
+			{{#if correction_reason}}
+				<p>
+					<span>{{tt "invoice.correction_reason"}}:</span>
+					{{{correction_reason}}}
+				</p>
+			{{/if}}
+		{{/eq}}
+
+		
 	
 		{{#or paid show_paid_when_zero}}
 			<p>
@@ -277,7 +223,7 @@
 				{{#if paid}}
 					{{paid}}
 				{{else}}
-					0.00 {{currency}}
+					{{zero_with_currency}}
 				{{/if}}
 				{{#and show_paid_date paid_date}}
 					{{tt 'invoice.paid_on'}} {{paid_date}}
@@ -300,13 +246,13 @@
 			</p>
 		{{/if}}
 
-		{{#if bank}}
+		{{#or bank bank_account swift}}
 			<p>
-				<span>{{tt "invoice.seller_bank"}}:</span> {{bank}}
-	      		{{#if department.bank_swift}} <span style="margin-left:2em;">{{tt "department.bank_swift"}}:</span> {{department.bank_swift}} {{/if}}
-	      		{{#if bank_account}} <span style="margin-left:2em;">{{tt "department.bank_iban"}}:</span> {{bank_account}} {{/if}}
+				{{#if bank}}<span>{{tt "invoice.seller_bank"}}:</span> {{bank}}<i style="margin-right:2em;"></i>{{/if}}
+	      		{{#if swift}} <span>{{tt "department.bank_swift"}}:</span> {{swift}}<i style="margin-right:2em;"></i>{{/if}}
+	      		{{#if bank_account}} <span>{{tt "department.bank_iban"}}:</span> {{bank_account}} {{/if}}
       		</p>
-		{{/if}}
+		{{/or}}
 
 		{{#eq locale 'fr'}}
 			{{#not_eq additional_fields.interest_rate 'Néant'}}
@@ -369,7 +315,7 @@
 			{{/if}}
 
 			{{#if stamp_below_sign_url}}
-				<img src="{{stamp_url}}" alt="stamp" style="max-width:40%"/>
+				<img src="{{stamp_url}}" alt="stamp" style="max-width:50%" id="custom_img" />
 			{{/if}}	
 		</div>
 		<div id="buyer_sign">
@@ -467,7 +413,7 @@
 	{{else}}
 		{{#if description_footer}}
 			<section id="description_footer">
-				{{description_footer}}
+				{{{description_footer}}}
 			</section>
 		{{/if}}
 	{{/eq}}
@@ -480,7 +426,7 @@
 		
 			<section id="#last_page">
 
-				<span>{{description_long}}</span>
+				<span>{{{description_long}}}</span>
 
 			</section>
 		

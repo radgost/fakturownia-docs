@@ -20,6 +20,7 @@
 		</tr>
 		{{/if}}
 
+		{{#if tax_visible}}
 		<tr>
 			<th>
 				{{tt "invoice.total_price_net" }}
@@ -33,7 +34,6 @@
 			</td>
 			{{/if}}
 		</tr>
-		{{#if tax_visible}}
 		<tr>
 			<th>
 				{{tax_value_name}}
@@ -66,16 +66,39 @@
 
 	<div class="clear"></div>
 
-	{{#if exchange_currency}}
-
-	<table class="clean" id="exchange_currency">
-		<tbody>
-			<tr>		
-				<td>
-					{{long_exchange_note}}<br />
-				</td>
-			</tr>
-		</tbody>
-	</table>
-
+	{{!-- exchange_currency: i.exchange_currency, --}}
+	{{#if long_exchange_note}}
+		<table class="clean" id="exchange_currency">
+			<tbody>
+				<tr>		
+					<td>
+						{{!-- long_exchange_note: i.long_exchange_note --}}
+						{{long_exchange_note}}<br />
+						{{#eq locale 'pl'}}
+							{{#unless tax_visible}}
+								Przeliczona wartość: {{outstanding_in_exchange_currency}}
+							{{else}}
+								Przeliczona kwota VAT: {{tax_in_exchange_currency}}
+							{{/unless}}
+						{{/eq}}
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	{{else}}
+		{{#if exchange_tax}}
+			<table class="clean" id="exchange_currency">
+				<tbody>
+					<tr>		
+						<td>
+							{{!-- long_exchange_note_for_tax: (i.poland_invoice? && i.exchange_date && i.price_tax.to_f != 0) ? i.long_exchange_note(i.account.currency, i.exchange_rate) : nil, --}}
+							{{long_exchange_note_for_tax}}<br />
+							<strong>{{tt "invoice.exchanged_tax_price"}}: {{exchange_tax}}</strong>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		{{/if}}
 	{{/if}}
+	{{!-- exchange_tax: (i.poland_invoice? && i.exchange_date && i.price_tax.to_f != 0) ? (number_to_currency(i.price_tax * i.exchange_rate, :unit => 'PLN')) : nil, --}}
+

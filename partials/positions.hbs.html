@@ -4,35 +4,35 @@
 
 		<thead>
 			<tr>
-				<th class="width0 nr_col">
+				<th class="width0 nr_col" id="nr_col">
 					{{tt "invoice_position.nr"}}
 				</th>
-				<th class="width4 text_left name_col">
+				<th class="width4 text_left name_col" id="name_col">
 				 {{tt "invoice_position.name"}}
 				</th>
 
 				{{#if use_product_code}}
-					<th class="width2 code_col">
+					<th class="width2 code_col" id="code_col">
 						{{tt "invoice_position.code"}}
 					</th>				
 				{{/if}}
 
 				{{#if additional_info}}				
-					<th class="width2 additional_info_col">
+					<th class="width2 additional_info_col" id="additional_info_col">
 						{{additional_info_desc}}
 					</th>				
 				{{/if}}
 				{{#if discount}}				
-					<th class="width1 discount_col">
+					<th class="width1 discount_col" id="discount_col">
 						{{tt "invoice_position.discount_percent"}}
 					</th>				
 				{{/if}}
 
-				<th class="width1 quantity_col">
+				<th class="width1 quantity_col" id="quantity_col">
 					{{tt "invoice_position.quantity"}}
 				</th>
 				{{#if tax_visible}}
-					<th class="width3 text_right price_net_col">
+					<th class="width3 text_right price_net_col" id="price_net_col">
 						{{tt "invoice_position.price_net"}}
 					</th>
 					
@@ -48,25 +48,25 @@
 						</th>
 					{{/if}}
 
-					<th class="width3 text_right total_price_net_col">
+					<th class="width3 text_right total_price_net_col" id="total_price_net_col">
 						{{tt "invoice_position.total_price_net"}}
 					</th>
-					<th class="width1 text_center tax_col">
+					<th class="width1 text_center tax_col" id="tax_col">
 						{{tax_name}} %
 					</th>
 					{{#if tax2_visible}}
-						<th class="width1 text_center tax2_col">
+						<th class="width1 text_center tax2_col" id="tax2_col">
 							{{tax2_name}} %
 						</th>
 					{{/if}}
-					<th class="width3 text_right tax_value_col">					
+					<th class="width3 text_right tax_value_col" id="tax_value_col">					
 						{{tax_value_name}}					
 					</th>
-					<th class="width3 text_right total_price_gross_col">
+					<th class="width3 text_right total_price_gross_col nowrap" id="total_price_gross_col">
 						 {{tt "invoice_position.total_price_gross"}}
 					</th>
 				{{else}}
-					<th class="width3 text_right price_net_col">
+					<th class="width3 text_right price_net_col" id="price_net_col">
 						{{tt "invoice_position.bill_price_net"}}
 					</th>
 					{{#if discount}}
@@ -74,7 +74,7 @@
 							{{tt "invoice_position.price_net_with_discount"}}
 						</th>
 					{{/if}}
-					<th class="width3 text_right total_price_gross_col">
+					<th class="width3 text_right total_price_gross_col" id="total_price_gross_col">
 						 {{tt "invoice_position.bill_total_price_gross"}}
 					</th>
 				{{/if}}
